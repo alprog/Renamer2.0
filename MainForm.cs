@@ -47,7 +47,7 @@ namespace Renamer2
         {
             InputPathCombo.BackColor = IsInputFolderValid ? Color.White : Color.Red;
             RefreshTargetFolderTextBox();
-            Refresh();
+            Refresh(true);
         }
 
         private void RefreshTargetFolderTextBox()
@@ -137,10 +137,14 @@ namespace Renamer2
             }
         }
 
-        private void Refresh()
+        private void Refresh(bool refreshPattern = false)
         {
             PreviewPictureBox.Image = null;
             RebuildRecordList();
+            if (refreshPattern)
+            {
+                RefreshRenamePatternTextBox();
+            }
             ApplyConversion();
             RefreshListView();
             RefreshButtonState();
@@ -158,6 +162,31 @@ namespace Renamer2
                 {
                     Records.Add(new FileRecord(fileInfo));
                 }
+            }
+        }
+
+        private void RefreshRenamePatternTextBox()
+        {
+            if (Records.Count > 0)
+            {
+                var patternText = Path.GetFileNameWithoutExtension(Records[0].OriginFileInfo.Name);
+
+                var array = patternText.ToCharArray();
+                bool started = false;
+                for (int i = patternText.Length - 1; i >= 0; i--)
+                {
+                    if (Char.IsDigit(array[i]))
+                    {
+                        started = true;
+                        array[i] = '#';
+                    }
+                    else if (started)
+                    {
+                        break;
+                    }
+                }
+
+                RenamePatternTextBox.Text = new string(array);
             }
         }
 
