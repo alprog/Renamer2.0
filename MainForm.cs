@@ -293,11 +293,11 @@ namespace Renamer2
                 }
             }
 
-            var result = MessageBox.Show("Готово! Открыть папку с результатом?", "Renamer", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                Process.Start("explorer.exe", targetDirectory.FullName);
-            }
+            //var result = MessageBox.Show("Готово! Открыть папку с результатом?", "Renamer", MessageBoxButtons.YesNo);
+            //if (result == DialogResult.Yes)
+            //{
+            //    Process.Start("explorer.exe", targetDirectory.FullName);
+            //}
 
             RefreshTargetFolderTextBox();
         }
